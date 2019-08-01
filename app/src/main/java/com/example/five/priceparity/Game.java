@@ -8,12 +8,13 @@ import java.util.List;
  *  Only has getter for this information.
  */
 public class Game {
-    private final String name;
-    private final double[] prices = new double[2];
-    private final String contents;
-    private final String imageUrl;
-    private final List<String> comments;
-    private final String url;
+    private String name;
+    //private double[] prices = new double[2];
+    private String[] prices= new String[2];
+    private String content;
+    private String image;
+    private List<String> comments;
+    private String link;
 
     // Abstraction Function
     // name -- the name of the game
@@ -30,17 +31,21 @@ public class Game {
     // All fields are private final
     // Can't be changed since init
 
-    public Game(String name, double priceSteam, double priceEpic, String contents,
+    public Game(String name, String priceSteam, String priceEpic, String contents,
                 String imageUrl, List<String> comments, String url){
         this.name = name;
         this.prices[0] = priceSteam;
         this.prices[1] = priceEpic;
-        this.contents = contents;
-        this.imageUrl = imageUrl;
+        this.content = contents;
+        this.image = imageUrl;
         this.comments = comments;
-        this.url = url;
+        this.link = url;
     }
 
+    public Game(String name){
+        this.name = name;
+
+    }
     /**
      * To get the name of the game
      *
@@ -58,7 +63,7 @@ public class Game {
      *
      * @return the prices of the game
      */
-    public double[] getPrices() {
+    public String[] getPrices() {
         return prices;
     }
 
@@ -68,7 +73,7 @@ public class Game {
      * @return the String of contents
      */
     public String getContents() {
-        return contents;
+        return content;
     }
 
     /**
@@ -77,7 +82,7 @@ public class Game {
      * @return the image url of the game
      */
     public String getImageUrl() {
-        return imageUrl;
+        return image;
     }
 
     /**
@@ -95,6 +100,6 @@ public class Game {
      * @return the purchase url of the game
      */
     public String getUrl() {
-        return url;
+        return link;
     }
 }

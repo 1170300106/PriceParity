@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class myAdapter extends ArrayAdapter {
     @NonNull
     @Override
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        myBean mybean = (myBean) getItem(position);
+        final myBean mybean = (myBean) getItem(position);
         View view = LayoutInflater.from(getContext()).inflate(R.layout.listlayout,null);//这个是实例化一个我们自己写的界面Item
         LinearLayout linearLayout = view.findViewById(R.id.ll_view);
 
@@ -47,7 +48,8 @@ public class myAdapter extends ArrayAdapter {
             public void onClick(View view) {
                 //Toast.makeText(getContext(),"你点击了第"+position+"项"+"你选择"/*+radiotext*/,Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(), ShowDetailsActivity.class);
-
+                Gson gson = new Gson();
+                intent.putExtra("game", gson.toJson(mybean));
                 getContext().startActivity(intent);
             }
         });
