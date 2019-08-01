@@ -39,7 +39,7 @@ public class myAdapter extends ArrayAdapter {
         String url = mybean.getImageUrl();
         ImageView headImage = view.findViewById(R.id.headimage);
         TextView headText = view.findViewById(R.id.headtext);
-        Glide.with(getContext()).load(url).override(184, 69).fitCenter().into(headImage);
+        Glide.with(getContext()).load(url)./*override(184, 69).*/fitCenter().into(headImage);
         headText.setText(mybean.getName());
 
         linearLayout.setOnClickListener(new View.OnClickListener() {//检查哪一项被点击了

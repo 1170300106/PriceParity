@@ -9,7 +9,7 @@ public class myBean {
 
     private final String name;
     private final String image;
-    private final double price;
+    private final String price;
 
 
     // Abstraction Function
@@ -22,7 +22,7 @@ public class myBean {
     // All fields are private final
     // Can't be changed since init
 
-    public myBean(String name, double price, String imageUrl){
+    public myBean(String name, String price, String imageUrl){
         this.image = imageUrl;
         this.name = name;
         this.price = price;
@@ -42,7 +42,7 @@ public class myBean {
      *
      * @return the price of the game
      */
-    public double getPrice() {
+    public String getPrice() {
         return price;
     }
 

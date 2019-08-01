@@ -1,5 +1,6 @@
 package com.example.five.priceparity;
 
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,63 +30,82 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    private String run(String url) throws IOException {
+        Request request = new Request.Builder().url(url).build();
+        try(Response response = client.newCall(request).execute()){
+            return response.body().string();
+        }
+
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
         ListView listView = (ListView) findViewById(R.id.listview);
         Toast toast=Toast.makeText(MainActivity.this,"Begin json parse",Toast.LENGTH_SHORT    );
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
-        init();
+        try {
+            init();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         myAdapter adapter = new myAdapter(MainActivity.this,R.layout.listlayout,myBeanList);
 
         listView.setAdapter(adapter);
 
     }
 
-    private void init(){//初始化数据
+    private void init() throws IOException {//初始化数据
 //        Scanner sc = new Scanner("C:\Users\Raymo\Desktop\data.json");
 //        for(int i = 0; i < 15; i++){
 //            myBean bean = new myBean("aa",20.0,"https://media.st.dl.bscstorage.net/steam/apps/457140/capsule_184x69_schinese.jpg?t=1564505458");
 //            myBeanList.add(bean);
 //        }
 
-        Toast toast2=Toast.makeText(MainActivity.this,"Begin request",Toast.LENGTH_SHORT    );
+        Toast toast2 = Toast.makeText(MainActivity.this, "Begin request", Toast.LENGTH_SHORT);
         toast2.setGravity(Gravity.CENTER, 0, 0);
         toast2.show();
-        Request request = new Request.Builder()
-                    .url("http://8637637.cpolar.io/gamelist")
-                    .build();
 
-        Toast toast3=Toast.makeText(MainActivity.this,"End request",Toast.LENGTH_SHORT    );
+
+        Toast toast3 = Toast.makeText(MainActivity.this, "End request", Toast.LENGTH_SHORT);
         toast3.setGravity(Gravity.CENTER, 0, 0);
         toast3.show();
-        try (Response response = client.newCall(request).execute()) {
-            Toast toast4=Toast.makeText(MainActivity.this,"Begin try",Toast.LENGTH_SHORT    );
-            toast4.setGravity(Gravity.CENTER, 0, 0);
-            toast4.show();
-            Gson gson = new Gson();
-            Log.i("main", "Begin json parse");
-            Toast toast=Toast.makeText(MainActivity.this,"Begin json parse",Toast.LENGTH_SHORT    );
-            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
-            myBeanList  = Arrays.asList(gson.fromJson(response.body().string(),myBean[].class));
-            Log.i("main", "Finish json parse");
-            int len = myBeanList.size();
-            for(int i = 0; i < len; i++){
-                myBean tmp = myBeanList.get(i);
-                Log.i("main", tmp.getName() + tmp.getPrice() + tmp.getImageUrl());
-                Toast toast1=Toast.makeText(MainActivity.this,"Begin json parse",Toast.LENGTH_SHORT    );
-                toast1.setGravity(Gravity.CENTER, 0, 0);
-                toast1.show();
-            }
+
+
+        Toast toast4 = Toast.makeText(MainActivity.this, "Begin try", Toast.LENGTH_SHORT);
+        toast4.setGravity(Gravity.CENTER, 0, 0);
+        toast4.show();
+
+
+        Gson gson = new Gson();
+
+        Log.i("main", "Begin json parse");
+        Toast toast = Toast.makeText(MainActivity.this, "Begin json parse", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+
+
+        myBeanList = Arrays.asList(gson.fromJson(run("http://192.168.43.52:8080/gamelist"), myBean[].class));
+
+        Log.i("main", "Finish json parse");
+        int len = myBeanList.size();
+        for (int i = 0; i < len; i++) {
+            myBean tmp = myBeanList.get(i);
+            Log.i("main", tmp.getName() + tmp.getPrice() + tmp.getImageUrl());
+            Toast toast1 = Toast.makeText(MainActivity.this, "Begin json parse", Toast.LENGTH_SHORT);
+            toast1.setGravity(Gravity.CENTER, 0, 0);
+            toast1.show();
         }
-        catch (Exception e){
-            Toast toast=Toast.makeText(MainActivity.this,"in ex",Toast.LENGTH_SHORT    );
-            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
-        }
+
+
 
 
 //
