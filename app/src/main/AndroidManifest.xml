@@ -16,13 +16,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ShowSearchActivity"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+
+            >
 
         </activity>
         <activity
             android:name=".ShowDetailsActivity"
             android:label="@string/title_activity_show_details"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".MainActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

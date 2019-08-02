@@ -93,4 +93,7 @@
     <string name="action_settings">Settings</string>
     <string name="Search_text">Search games...</string>
     <string name="Button_text">Go!</string>
+    <string name="channel_name">sales</string>
+    <string name="channel_description">For giving sales information</string>
+
 </resources>

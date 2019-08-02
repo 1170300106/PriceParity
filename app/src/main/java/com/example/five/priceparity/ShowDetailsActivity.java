@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -60,13 +61,14 @@ public class ShowDetailsActivity extends AppCompatActivity {
             }
         }, cnt );
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_details);
         //String Buy_url = "";
         Intent intent = getIntent();
-            String gameobj = intent.getStringExtra("game");
+        String gameobj = intent.getStringExtra("game");
         Gson gson = new Gson();
         Game game = new Game("GTA5");
         try {
@@ -101,5 +103,16 @@ public class ShowDetailsActivity extends AppCompatActivity {
 //        showMyToast(toast2,10000);
     }
 
-
+    @Override
+    //安卓重写返回键事件
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("flag", true);
+            startActivity(intent);
+            finish();
+        }
+        return true;
+    }
 }

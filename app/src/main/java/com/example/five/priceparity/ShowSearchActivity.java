@@ -1,9 +1,14 @@
 package com.example.five.priceparity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.StrictMode;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.Window;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
@@ -35,20 +40,14 @@ public class ShowSearchActivity extends AppCompatActivity {
         try(Response response = client.newCall(request).execute()){
             return response.body().string();
         }
-
     }
 
-    private String run(String url) throws IOException {
-        Request request = new Request.Builder().url(url).build();
-        try(Response response = client.newCall(request).execute()){
-            return response.body().string();
-        }
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_search);
-
+//        ActionBar actionBar = getActionBar();
+//        actionBar.hide();
         Intent intent = getIntent();
         String search = intent.getStringExtra("searchgame");
 
@@ -68,4 +67,16 @@ public class ShowSearchActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 
+    @Override
+    //安卓重写返回键事件
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0){
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("flag", true);
+            startActivity(intent);
+            finish();
+        }
+        return true;
+    }
 }
